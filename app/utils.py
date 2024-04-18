@@ -42,7 +42,7 @@ def create_shell_file(script:str)->str:
     return create_file(script=script, ext='.sh',directory='./shell_scripts')
 
 def create_js_file(script:str)->str:
-    return create_file(script=script, ext='.js', directory='./tests')
+    return create_file(script=script, ext='.spec.js', directory='./tests')
 
 def create_file(script:str, ext:str, directory:str)->str:
     script_name=str(datetime.now().strftime('%Y%m%d%H%M')) + '-' + str(uuid.uuid4())[:8] + ext
@@ -61,7 +61,7 @@ def check_bash(script:str):
     return res
 
 def run_cmd(args:RunCmd):
-    print(args.json())
+    print(args.model_dump_json())
     tmp_pipe_fp=str(datetime.now().strftime('%Y%m%d%H%M')) + '-' + str(uuid.uuid4())[:8] + '.pipe'
     tmp_pipe_fp=Path('/tmp')/tmp_pipe_fp
 
