@@ -2,6 +2,8 @@
 # https://hub.docker.com/_/python
 FROM mcr.microsoft.com/playwright/python
 
+ARG PORT
+
 ENV PYTHONUNBUFFERED 1
 
 # Copy local code to the container image.
