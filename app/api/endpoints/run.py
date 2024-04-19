@@ -10,7 +10,7 @@ from app.utils import create_js_file, remove_file
 
 router = APIRouter()
 
-@router.post("/run", response_model=RunResponse)
+@router.post("/run_playwright", response_model=RunResponse)
 def run(req_body:RunRequest):
     fp=create_js_file(req_body.script)
     stdout,stderr= run_cmd(RunCmd(
