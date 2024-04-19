@@ -24,6 +24,7 @@ hostname=re.sub('\s','',hostname)
 
 def clean_output(x):
     res=re.sub(r'\x1B[@-_][0-?]*[ -/]*[@-~]','',x)
+    res=re.sub(r'\x1b\[([0-9]+)(;[0-9]+)*m','',res)
     res=re.sub(rf"{whoami}.{hostname}",'',res)
     return res
 
