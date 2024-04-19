@@ -14,7 +14,7 @@ def run(req_body:RunRequest):
         fp=create_js_file(req_body.script)
         stdout,stderr= run_cmd(RunCmd(
             session_id=req_body.session_id,
-            command=rf"npx playwright test {fp} --reporter=list",
+            command=rf"npx playwright test {fp}",
             output=req_body.output,
             keyword=req_body.keyword,
             timeout=req_body.timeout,
