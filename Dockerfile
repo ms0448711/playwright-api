@@ -20,6 +20,6 @@ COPY . ./
 # Install production dependencies.
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN npm init
+RUN npm install -y
 
 CMD exec uvicorn --workers 4 --host 0.0.0.0 --port 7000 app.main:app 
