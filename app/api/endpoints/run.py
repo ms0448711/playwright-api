@@ -1,6 +1,5 @@
 from fastapi import APIRouter
-from app.schemas.run import RunRequest,RunResponse
-from app.schemas.clean_session import CleanSessionRequest, CleanSessionResponse
+from app.schemas import *
 import subprocess
 import traceback
 from app.utils import run_cmd,RunCmd
@@ -37,4 +36,15 @@ def clean_session(req_body:CleanSessionRequest):
     except:
         result=[]
     return CleanSessionResponse(result=result)
+
+@router.get("/session", response_model=GetSessionResponse)
+def get_session(req_body:GetSessionRequest):
+    try:
+        result=subprocess.check_output("tmux ls -f '#{m:"+req_body.prefix+"*,#{session_name}}' -F '#{session_name}'",shell=True,stdin=subprocess.DEVNULL,stderr=subprocess.STDOUT,text=True)
+        result=str(result).split('\n')
+        result.remove('')
+    except:
+        result=[]
+    return GetSessionResponse(result=result)
+
 
