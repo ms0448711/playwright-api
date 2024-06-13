@@ -111,3 +111,20 @@ def run_cmd(args:RunCmd):
     stdout=clean_output(stdout)
     stderr=clean_output(stderr)
     return stdout, stderr
+
+def parse_netstat():
+    # Run netstat command
+    result = subprocess.run(['netstat', '-tuln'], stdout=subprocess.PIPE, text=True)
+    output = result.stdout
+    
+    # Parse the output
+    ports = []
+    for line in output.splitlines():
+        # Look for lines with IP and port information
+        if re.search(r'(\d+\.\d+\.\d+\.\d+|\:\:)\:\d+', line):
+            parts = line.split()
+            protocol = parts[0]
+            address = parts[2]
+            port = address.split(':')[-1]
+            ports.append(port)
+    return ports

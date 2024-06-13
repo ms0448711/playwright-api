@@ -3,7 +3,7 @@ from app.schemas import *
 import subprocess
 import traceback
 from app.utils import run_cmd,RunCmd
-from app.utils import create_js_file, remove_file
+from app.utils import create_js_file, remove_file, parse_netstat
 
 router = APIRouter()
 
@@ -37,8 +37,8 @@ def clean_session(req_body:CleanSessionRequest):
         result=[]
     return CleanSessionResponse(result=result)
 
-@router.get("/session", response_model=GetSessionResponse)
-def get_session(req_body:GetSessionRequest):
+@router.post("/list_sessions", response_model=GetSessionResponse)
+def list_sessions(req_body:GetSessionRequest):
     try:
         result=subprocess.check_output("tmux ls -f '#{m:"+req_body.prefix+"*,#{session_name}}' -F '#{session_name}'",shell=True,stdin=subprocess.DEVNULL,stderr=subprocess.STDOUT,text=True)
         result=str(result).split('\n')
@@ -47,4 +47,13 @@ def get_session(req_body:GetSessionRequest):
         result=[]
     return GetSessionResponse(result=result)
 
+@router.get("/ports", )
+def get_used_ports():
+    try:
+        ...
+        used_ports = parse_netstat()
+        return used_ports
+    except:
+        ...
+        return {}
 
